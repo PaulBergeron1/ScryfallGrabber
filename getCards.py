@@ -14,8 +14,6 @@ with open(filename, "r") as file:
     for line in file:
         card_name = line.strip()
         for card in getallcardsdata():
-            for i in range(0, 3):
-                pyautogui.press('shift')
             if card['lang'] == 'en' and card['name'] == card_name:
                 r = requests.get(card['image_uris']['png'])
                 card_name=card['name'] + '.jpg'
@@ -23,4 +21,5 @@ with open(filename, "r") as file:
                 open(result_card, 'wb').write(r.content)
                 c+=1
                 print("card number", c, ", card name, ", card['name'])
-                
+                for i in range(2):
+                    pyautogui.press('shift')
