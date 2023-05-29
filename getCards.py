@@ -1,4 +1,4 @@
-import json, requests, os
+import json, requests, os, pyautogui, time
     
 def getallcardsdata(): #downloads the current all-cards.json file from scryfall. Just reads to memory, doesn't save it to a file.
                       
@@ -6,12 +6,16 @@ def getallcardsdata(): #downloads the current all-cards.json file from scryfall.
     request_data = requests.get(request_url.json()['data'][3]['download_uri'])
     return request_data.json()
 c = 0
+pyautogui.FAILSAFE = False
 os.makedirs("art", exist_ok=True)
 filename = "cards.txt"
+print("While program is running, pc sleep will be prevented")
 with open(filename, "r") as file:
     for line in file:
         card_name = line.strip()
         for card in getallcardsdata():
+            for i in range(0, 3):
+                pyautogui.press('shift')
             if card['lang'] == 'en' and card['name'] == card_name:
                 r = requests.get(card['image_uris']['png'])
                 card_name=card['name'] + '.jpg'
@@ -19,3 +23,4 @@ with open(filename, "r") as file:
                 open(result_card, 'wb').write(r.content)
                 c+=1
                 print("card number", c, ", card name, ", card['name'])
+                
