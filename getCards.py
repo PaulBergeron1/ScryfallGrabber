@@ -14,7 +14,7 @@ with open(filename, "r") as file:
     for line in file:
         card_name = line.strip()
         for card in getallcardsdata():
-            if card['lang'] == 'en' and card['name'] == card_name:
+            if card['lang'] == 'en' and card['name'] == card_name and card['border_color']!='gold':
                 r = requests.get(card['image_uris']['png'])
                 card_name=card['name'] + '.jpg'
                 result_card = os.path.join("art", card_name)
